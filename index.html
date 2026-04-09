@@ -1,35 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>From Grave to War</title>
+
   <style>
-    body {
+    * {
       margin: 0;
-      background: black;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      background: radial-gradient(circle at center, #1a1a1a 0%, #000000 75%);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
-    img {
-      width: 300px;
-      max-width: 80%;
+    .intro-container {
+      text-align: center;
+      animation: fadeIn 1.8s ease;
+    }
+
+    .logo-link {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .logo-link img {
+      width: 320px;
+      max-width: 80vw;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.25));
     }
 
-    img:hover {
-      transform: scale(1.05);
+    .logo-link img:hover {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.45));
+    }
+
+    .enter-text {
+      margin-top: 18px;
+      color: #bdbdbd;
+      font-size: 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.45;
+      }
+      50% {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
 
-  <a href="comic.html">
-    <img src="./logo.png" alt="From Grave to War Logo">
-  </a>
+  <div class="intro-container">
+    <a href="comic.html" class="logo-link">
+      <img src="./logo.png" alt="From Grave to War Logo">
+    </a>
+    <div class="enter-text">Click to Enter</div>
+  </div>
 
 </body>
 </html>
