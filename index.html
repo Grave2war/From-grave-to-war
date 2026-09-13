@@ -1,89 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>From Grave to War</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Grave to War</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at center, #1a1a1a 0%, #000000 75%);
-      overflow: hidden;
-      font-family: Times New Roman, Times-serif;
-      font-weight: bold
-    }
+<style>
+  :root{
+    --void:#0b0a08;
+    --void-deep:#050403;
+    --blood:#7a0e0e;
+    --blood-bright:#a81616;
+    --ember:#c2551a;
+    --bone:#ddd4c0;
+    --bone-dim:#a89e8a;
+    --iron:#332c24;
+  }
 
-    .intro-container {
-      text-align: center;
-      animation: fadeIn 1.8s ease;
-    }
+  *{ margin:0; padding:0; box-sizing:border-box; }
 
-    .logo-link {
-      display: inline-block;
-      text-decoration: none;
-    }
+  html,body{ height:100%; }
 
-    .logo-link img {
-      width: 320px;
-      max-width: 80vw;
-      cursor: pointer;
-      transition: transform 0.4s ease, filter 0.4s ease;
-      filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.25));
-    }
+  body{
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 20%, rgba(122,14,14,0.10), transparent 55%),
+      radial-gradient(ellipse 90% 70% at 50% 100%, rgba(122,14,14,0.06), transparent 60%),
+      var(--void);
+    color:var(--bone);
+    font-family:'EB Garamond', serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+  }
 
-    .logo-link img:hover {
-      transform: scale(1.06);
-      filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.45));
-    }
+  /* grain / atmosphere */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.5;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
 
-    .enter-text {
-      margin-top: 18px;
-      color: #bdbdbd;
-      font-size: 16px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      animation: pulse 1.8s infinite;
-    }
+  /* cracked ground line beneath the mark */
+  .fissure{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:38vh;
+    background:
+      linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    pointer-events:none;
+  }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+  .stage{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:0 24px;
+    animation:rise 1.6s cubic-bezier(.2,.8,.2,1) both;
+  }
 
-    @keyframes pulse {
-      0%, 100% {
-        opacity: 0.45;
-      }
-      50% {
-        opacity: 1;
-      }
-    }
-  </style>
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:14px;
+    letter-spacing:3px;
+    color:var(--bone-dim);
+    margin-bottom:18px;
+  }
+
+  .mark{
+    display:inline-block;
+    text-decoration:none;
+    color:inherit;
+  }
+
+  .mark img{
+    display:block;
+    width:300px;
+    max-width:72vw;
+    margin:0 auto;
+    filter:
+      drop-shadow(0 0 34px rgba(122,14,14,0.35))
+      drop-shadow(0 2px 0 rgba(0,0,0,0.6));
+    transition:transform 0.5s cubic-bezier(.2,.8,.2,1), filter 0.5s ease;
+  }
+
+  .mark:hover img{
+    transform:scale(1.035);
+    filter:
+      drop-shadow(0 0 46px rgba(168,22,22,0.55))
+      drop-shadow(0 2px 0 rgba(0,0,0,0.6));
+  }
+
+  /* title, used as fallback / caption beneath the logo mark */
+  .title{
+    font-family:'Cinzel Decorative', serif;
+    font-weight:700;
+    font-size:clamp(28px, 5vw, 52px);
+    letter-spacing:2px;
+    color:var(--bone);
+    margin-top:22px;
+    line-height:1.15;
+    text-shadow:0 0 24px rgba(122,14,14,0.4), 0 2px 0 #000;
+  }
+
+  .title .war{ color:var(--blood-bright); }
+
+  .tagline{
+    margin-top:14px;
+    font-size:17px;
+    font-style:italic;
+    color:var(--bone-dim);
+    letter-spacing:0.5px;
+  }
+
+  .divider{
+    width:64px;
+    height:1px;
+    margin:28px auto;
+    background:linear-gradient(to right, transparent, var(--iron), transparent);
+    position:relative;
+  }
+  .divider::before{
+    content:"✦";
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    color:var(--blood);
+    font-size:11px;
+    background:var(--void);
+    padding:0 8px;
+  }
+
+  .enter{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 34px;
+    font-family:'EB Garamond', serif;
+    font-size:15px;
+    letter-spacing:2.5px;
+    color:var(--bone);
+    text-decoration:none;
+    border:1px solid var(--iron);
+    background:linear-gradient(180deg, rgba(122,14,14,0.12), rgba(122,14,14,0.02));
+    position:relative;
+    transition:border-color 0.35s ease, background 0.35s ease, color 0.35s ease;
+  }
+
+  .enter::after{
+    content:"→";
+    transition:transform 0.35s ease;
+  }
+
+  .enter:hover{
+    border-color:var(--blood-bright);
+    background:linear-gradient(180deg, rgba(122,14,14,0.28), rgba(122,14,14,0.05));
+    color:#fff;
+  }
+  .enter:hover::after{ transform:translateX(5px); }
+
+  .enter:focus-visible{
+    outline:2px solid var(--ember);
+    outline-offset:4px;
+  }
+
+  footer{
+    position:fixed;
+    bottom:22px;
+    left:0; right:0;
+    text-align:center;
+    font-size:12px;
+    letter-spacing:2px;
+    color:#453d33;
+    z-index:2;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stage{ animation:none; }
+    .mark img, .enter{ transition:none; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="intro-container">
-    <a href="comic.html" class="logo-link">
-      <img src="./logo.png" alt="From Grave to War Logo">
+  <div class="fissure"></div>
+
+  <div class="stage">
+    <div class="eyebrow">a war comic in five parts</div>
+
+    <a href="comic.html" class="mark" aria-label="Enter From Grave to War">
+      <img src="./logo.png" alt="From Grave to War">
     </a>
-    <div class="enter-text">Enter to Grave</div>
+
+    <h1 class="title">FROM GRAVE <span class="war">TO WAR</span></h1>
+    <p class="tagline">Some soldiers never stopped fighting.</p>
+
+    <div class="divider"></div>
+
+    <a href="comic.html" class="enter">Begin Chapter One</a>
   </div>
+
+  <footer>CHAPTER I &nbsp;·&nbsp; THE AWAKENING OF THE SAVIOURS</footer>
 
 </body>
 </html>
